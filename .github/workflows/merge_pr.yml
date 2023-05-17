@@ -16,7 +16,7 @@ jobs:
       - name: Merge into branch alpha
         run: |
           git branch
-          git logs
+          git log --oneline
           echo ${{ github.event.pull_request.head.ref }}
           # git merge --no-ff ${{ github.event.pull_request.head.ref }} -m "Merge pull request into Alpha"
         env:
