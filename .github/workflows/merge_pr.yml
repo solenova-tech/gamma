@@ -6,6 +6,9 @@ on:
       - opened
       - synchronize
 
+permissions:
+  contents: write
+
 jobs:
   mergePr:
     runs-on: ubuntu-latest
