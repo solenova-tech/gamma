@@ -1,17 +1,17 @@
-# ci-test
+# Gamma
 
-This is a Feature 1 branch and will be used for testing a lot of changes coming up, some small some big, but will it work? apparently it did not, the question was answered, let's see if the big surprise is ready!
+This repo is aimed at streamlining the Continuous Integration flow, how?
 
-Is it a bird? Is it a plane?
+Well, we have our stable branch that is deployed on prod, we can not test there, we need either 'staging'/'alpha'/æbeta'/'pre-prod'/'any name you prefer' environments, if we have a CD set up that deploys let's say 'alpha' branch to said environment, how do we make sure that the alpha has the latest code?
 
-Now you're looking for the secret
+We can manually merge every feature branch in it, or we could automate it 💡
 
-because of course you're not really looking. You don’t really
+This workflow is how you can automate it.
 
-You want to be
+## Breakdown
 
-No one cares about the man in the box, the man who
+This is what happens under the hood.
 
-My passion is equal to the
+When a PR is created on either the `main` or `master` branch or new code changes are pushed to the already opened PR, the workflow will merge all that code to the `alpha` branch, you just have to make sure that there are no conflicting changes.
 
-You Know Nothing,
+NOTE: if you want a branch with a different name, just change `alpha` in the `.github/workflows/merge_pr.yml`
