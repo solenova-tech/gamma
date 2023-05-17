@@ -15,6 +15,7 @@ jobs:
 
       - name: Merge into branch alpha
         run: |
+          git fetch
           git checkout ${{ env.TARGET_BRANCH }}
           git branch
           git log --oneline
