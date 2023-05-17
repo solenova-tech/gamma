@@ -2,7 +2,7 @@
 
 This repo is aimed at streamlining the Continuous Integration flow, how you ask?
 
-Well, we have our stable branch that is deployed on prod, we can not test there, we need either 'staging'/'alpha'/æbeta'/'pre-prod'/'any name you prefer' environments, if we have a CD set up that deploys let's say 'alpha' branch to said environment, how do we make sure that the alpha has the latest code?
+Well, we have our stable branch that is deployed on prod, we can not test there, we need either 'staging'/'alpha'/'beta'/'pre-prod'/'any name you prefer' environments, if we have a CD set up that deploys let's say 'alpha' branch to said environment, how do we make sure that the alpha has the latest code?
 
 We can manually merge every feature branch in it, or we could automate it 💡
 
