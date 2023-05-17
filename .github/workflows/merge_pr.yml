@@ -1,4 +1,4 @@
-name: Merge dev PR to alpha branch
+name: Merge dev PR to ${{ env.TARGET_BRANCH }} branch
 
 on:
   pull_request:
@@ -13,12 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Merge into branch alpha
+      - name: Merge into branch ${{ env.TARGET_BRANCH }}
         run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
+          git checkout ${{ env.TARGET_BRANCH }}
           git branch
           git log --oneline
           echo ${{ github.event.pull_request.head.ref }}
-          # git merge --no-ff ${{ github.event.pull_request.head.ref }} -m "Merge pull request into Alpha"
+          # git merge --no-ff ${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
         env:
           TARGET_BRANCH: alpha
