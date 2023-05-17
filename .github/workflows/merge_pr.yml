@@ -1,4 +1,4 @@
-name: Merge dev PR to ${{ env.TARGET_BRANCH }} branch
+name: Merge dev PR to alpha branch
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Merge into branch ${{ env.TARGET_BRANCH }}
+      - name: Merge into branch alpha
         run: |
           git checkout ${{ env.TARGET_BRANCH }}
           git branch
