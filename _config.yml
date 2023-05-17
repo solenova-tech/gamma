@@ -1,3 +1,6 @@
 remote_theme: pages-themes/hacker@v0.2.0
 plugins:
 - jekyll-remote-theme
+
+title: Gamma | Streamline Continuous Integration with Automated Branch Merging
+description: Automate branch merging in your Continuous Integration flow with ease. Streamline code deployment and testing by leveraging this repository's workflow. Merge feature branches into designated environments, such as 'staging,' 'alpha,' 'beta,' or 'pre-prod,' effortlessly. Boost efficiency, consistency, and reliability while scaling your project seamlessly. Get started with the provided workflow and enhance your CI process today!
