@@ -25,9 +25,9 @@ jobs:
       - name: Check if branch ${{ env.TARGET_BRANCH }} exists
         run: |
           git fetch
-          git pull
           if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
             git checkout ${{ github.event.repository.default_branch }}
+            git pull
             git branch ${{ env.TARGET_BRANCH }}
           fi
 
@@ -36,5 +36,6 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git config --global user.name "${{ github.actor }}"
           git checkout ${{ env.TARGET_BRANCH }}
+          git pull
           git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
           git push origin ${{ env.TARGET_BRANCH }}
