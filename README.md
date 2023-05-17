@@ -17,3 +17,4 @@ When a PR is created on either the `main` or `master` branch or new code changes
 NOTE: if you want a branch with a different name, just change word `alpha` in the `.github/workflows/merge_pr.yml at lines [1, 16]`
 
 ## Contributions
+You can contribute either by creating an issue that you face, translating the README to another language, or submitting a fix
