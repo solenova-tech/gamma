@@ -3,8 +3,7 @@ name: Merge dev PR to alpha branch
 on:
   pull_request:
     branches:
-      - master
-      - main
+      - ${{ github.event.repository.default_branch }}
     types:
       - opened
       - synchronize
@@ -18,14 +17,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        
+      - name: Check if branch ${{ env.TARGET_BRANCH }} exists
+        run: |
+          if ! git rev-parse --verify alpha >/dev/null 2>&1; then
+            git checkout ${{ github.event.repository.default_branch }}
+            git fetch
+            git pull
+            git branch ${{ env.TARGET_BRANCH }}
+          fi
 
-      - name: Merge into branch alpha
+      - name: Merge into branch ${{ env.TARGET_BRANCH }}
         run: |
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git config --global user.name "${{ github.actor }}"
           git fetch
-          git checkout -b ${{ env.TARGET_BRANCH }}
+          git pull
+          git checkout ${{ env.TARGET_BRANCH }}
           git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
           git push origin ${{ env.TARGET_BRANCH }}
-        env:
-          TARGET_BRANCH: alpha
+env:
+  TARGET_BRANCH: alpha
