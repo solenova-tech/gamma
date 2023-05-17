@@ -15,3 +15,5 @@ This is what happens under the hood.
 When a PR is created on either the `main` or `master` branch or new code changes are pushed to the already opened PR, the workflow will merge all that code to the `alpha` branch, you just have to make sure that there are no conflicting changes.
 
 NOTE: if you want a branch with a different name, just change word `alpha` in the `.github/workflows/merge_pr.yml at lines [1, 16]`
+
+## Contributions
