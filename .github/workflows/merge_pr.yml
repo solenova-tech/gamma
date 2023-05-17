@@ -27,3 +27,4 @@ jobs:
           git push origin ${{ env.TARGET_BRANCH }}
         env:
           TARGET_BRANCH: alpha
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
