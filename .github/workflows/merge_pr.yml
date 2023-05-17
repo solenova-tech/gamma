@@ -23,6 +23,6 @@ jobs:
           git fetch
           git checkout ${{ env.TARGET_BRANCH }}
           git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
-          git push origin/${{ env.TARGET_BRANCH }}
+          git push origin ${{ env.TARGET_BRANCH }}
         env:
           TARGET_BRANCH: alpha
