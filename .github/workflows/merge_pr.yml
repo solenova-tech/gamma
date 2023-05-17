@@ -20,6 +20,6 @@ jobs:
           git branch
           git log --oneline
           echo ${{ github.event.pull_request.head.ref }}
-          # git merge --no-ff ${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
+          git merge --no-ff ${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
         env:
           TARGET_BRANCH: alpha
