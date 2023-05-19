@@ -16,7 +16,6 @@ env:
 runs:
   using: "composite"
   steps:
-    shell: bash
     - run: |
         git fetch
         if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
@@ -25,6 +24,7 @@ runs:
           git branch ${{ env.TARGET_BRANCH }}
           git push --set-upstream origin ${{ env.TARGET_BRANCH }}
         fi
+      shell: bash
 
     - run: |
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
@@ -32,4 +32,5 @@ runs:
         git checkout ${{ env.TARGET_BRANCH }}
         git pull
         git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
-        git push origin ${{ env.TARGET_BRANCH }}
+        git push origin ${{ env.TARGET_BRANCH }} 
+      shell: bash       
