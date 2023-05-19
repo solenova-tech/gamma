@@ -14,30 +14,27 @@ branding:
   icon: 'activity'
   color: 'white'
 
-env:
-  TARGET_BRANCH: INPUTS_TARGET-BRANCH
-  GITHUB_PAT: INPUTS_TOKEN
 runs:
   using: 'composite'
   steps:
     - run: |
         echo ${{ env.TARGET_BRANCH }}
         echo ${{ env.GITHUB_PAT }}
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git config --global user.name "${{ github.actor }}"
+        git remote set-url origin https://${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         git fetch
         if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           git checkout ${{ github.event.repository.default_branch }}
           git pull
           git branch ${{ env.TARGET_BRANCH }}
-          git remote set-url origin https://${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
           git push --set-upstream origin ${{ env.TARGET_BRANCH }}
         fi
-      shell: bash
-
-    - run: |
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git config --global user.name "${{ github.actor }}"
         git checkout ${{ env.TARGET_BRANCH }}
         git pull
         git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
         git push origin ${{ env.TARGET_BRANCH }}
       shell: bash
+      env:
+        TARGET_BRANCH: INPUTS_TARGET-BRANCH
+        GITHUB_PAT: INPUTS_TOKEN
