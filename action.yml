@@ -12,12 +12,12 @@ branding:
   color: 'white'
 
 env:
-  TARGET_BRANCH: "${{ inputs.target-branch }}"
+  TARGET_BRANCH: INPUTS_TARGET-BRANCH
 runs:
   using: "composite"
-  shell: bash
   steps:
-    run: |
+    shell: bash
+    - run: |
       git fetch
       if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
         git checkout ${{ github.event.repository.default_branch }}
@@ -26,7 +26,7 @@ runs:
         git push --set-upstream origin ${{ env.TARGET_BRANCH }}
       fi
 
-    run: |
+    - run: |
       git config --global user.email "${{ github.actor }}@users.noreply.github.com"
       git config --global user.name "${{ github.actor }}"
       git checkout ${{ env.TARGET_BRANCH }}
