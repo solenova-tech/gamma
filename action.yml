@@ -3,10 +3,6 @@ description: Merge your PR directly to the testing branch!
 author: Umair Jibran
 
 inputs:
-  head-branch:
-    description: 'Head Branch of your repo, defaults to master'
-    required: false
-    default: 'master'
   target-branch:
     description: 'Branch in which you want to merge the PR, defaults to alpha'
     required: false
@@ -15,42 +11,25 @@ branding:
   icon: 'activity'
   color: 'white'
 
-on:
-  pull_request:
-    branches:
-      - "${{ inputs.head-branch }}"
-    types:
-      - opened
-      - synchronize
-
-permissions:
-  contents: write
-
 env:
   TARGET_BRANCH: "${{ inputs.target-branch }}"
+runs:
+  using: "composite"
+  shell: bash
+  steps:
+    run: |
+      git fetch
+      if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
+        git checkout ${{ github.event.repository.default_branch }}
+        git pull
+        git branch ${{ env.TARGET_BRANCH }}
+        git push --set-upstream origin ${{ env.TARGET_BRANCH }}
+      fi
 
-jobs:
-  mergePr:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Check if branch ${{ env.TARGET_BRANCH }} exists
-        run: |
-          git fetch
-          if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
-            git checkout ${{ github.event.repository.default_branch }}
-            git pull
-            git branch ${{ env.TARGET_BRANCH }}
-            git push --set-upstream origin ${{ env.TARGET_BRANCH }}
-          fi
-
-      - name: Merge into branch ${{ env.TARGET_BRANCH }}
-        run: |
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --global user.name "${{ github.actor }}"
-          git checkout ${{ env.TARGET_BRANCH }}
-          git pull
-          git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
-          git push origin ${{ env.TARGET_BRANCH }}
+    run: |
+      git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      git config --global user.name "${{ github.actor }}"
+      git checkout ${{ env.TARGET_BRANCH }}
+      git pull
+      git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
+      git push origin ${{ env.TARGET_BRANCH }}
