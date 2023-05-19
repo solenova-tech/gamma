@@ -1,10 +1,24 @@
-name: Merge dev PR to alpha branch
+name: gamma-ci-made-easy
+description: Merge your PR directly to the testing branch!
+author: Umair Jibran
+
+inputs:
+  head-branch:
+    description: 'Head Branch of your repo, defaults to master'
+    required: false
+    default: 'master'
+  target-branch:
+    description: 'Branch in which you want to merge the PR, defaults to alpha'
+    required: false
+    default: 'alpha'
+branding:
+  icon: 'activity'
+  color: 'white'
 
 on:
   pull_request:
     branches:
-      - main
-      - master
+      - "${{ inputs.head-branch }}"
     types:
       - opened
       - synchronize
@@ -13,7 +27,7 @@ permissions:
   contents: write
 
 env:
-  TARGET_BRANCH: alpha
+  TARGET_BRANCH: "${{ inputs.target-branch }}"
 
 jobs:
   mergePr:
