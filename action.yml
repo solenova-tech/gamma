@@ -21,6 +21,7 @@ runs:
   using: 'composite'
   steps:
     - run: |
+        echo ${{ env }}
         git fetch
         if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           git checkout ${{ github.event.repository.default_branch }}
