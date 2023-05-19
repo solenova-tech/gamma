@@ -7,14 +7,18 @@ inputs:
     description: 'Branch in which you want to merge the PR, defaults to alpha'
     required: false
     default: 'alpha'
+  token:
+    description: GitHub Personal Access Token
+    required: true
 branding:
   icon: 'activity'
   color: 'white'
 
 env:
   TARGET_BRANCH: INPUTS_TARGET-BRANCH
+  GITHUB_PAT: INPUTS_TOKEN
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - run: |
         git fetch
@@ -22,6 +26,7 @@ runs:
           git checkout ${{ github.event.repository.default_branch }}
           git pull
           git branch ${{ env.TARGET_BRANCH }}
+          git remote set-url origin https://${{ env.GITHUB_PAT }}@github.com/${{ github.repository_owner }}/${{ github.repository }}.git
           git push --set-upstream origin ${{ env.TARGET_BRANCH }}
         fi
       shell: bash
@@ -32,5 +37,5 @@ runs:
         git checkout ${{ env.TARGET_BRANCH }}
         git pull
         git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
-        git push origin ${{ env.TARGET_BRANCH }} 
-      shell: bash       
+        git push origin ${{ env.TARGET_BRANCH }}
+      shell: bash
