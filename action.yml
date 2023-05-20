@@ -34,7 +34,7 @@ runs:
         echo "CHECKING OUT \`$BRANCH\`"
         git checkout $BRANCH
         git fetch
-        if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
+        if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           echo "CREATING \`${{ env.TARGET_BRANCH }}\`"
           git branch ${{ env.TARGET_BRANCH }}
           echo "PUSHING \`${{ env.TARGET_BRANCH }}\`"
