@@ -53,3 +53,8 @@ runs:
       env:
         TARGET_BRANCH: ${{ inputs.target-branch }}
         GITHUB_PAT: ${{ inputs.token }}
+
+    - run: |
+        echo "THIS ACTION SUPPORTS PULL REQUESTS ONLY, for now..."
+      shell: bash
+      if: ${{ github.event_name != 'pull_request' }}
