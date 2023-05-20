@@ -18,14 +18,12 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        echo ${{ env.TARGET_BRANCH }}
-        echo ${{ env.GITHUB_PAT }}
-        echo https://${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
+        echo https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git config --global user.name "${{ github.actor }}"
-        git remote set-url origin https://${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         pwd
-        ls
+        ls -lah
+        git remote set-url origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         git fetch
         if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           git checkout ${{ github.event.repository.default_branch }}
