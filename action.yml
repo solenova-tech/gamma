@@ -39,9 +39,12 @@ runs:
           git branch ${{ env.TARGET_BRANCH }}
           echo "PUSHING \`${{ env.TARGET_BRANCH }}\`"
           git push --set-upstream origin ${{ env.TARGET_BRANCH }}
+          echo "CHECKING OUT \`${{ env.TARGET_BRANCH }}\`"
+          git checkout ${{ env.TARGET_BRANCH }}
+        else
+          echo "CHECKING OUT \`${{ env.TARGET_BRANCH }}\`"
+          git checkout -b ${{ env.TARGET_BRANCH }} origin/${{ env.TARGET_BRANCH }}
         fi
-        echo "CHECKING OUT \`${{ env.TARGET_BRANCH }}\`"
-        git checkout ${{ env.TARGET_BRANCH }}
         echo "PULLING CHANGES IF ANY"
         git pull origin ${{ env.TARGET_BRANCH }}
         echo "MERGING PR IN \`${{ env.TARGET_BRANCH }}\`"
