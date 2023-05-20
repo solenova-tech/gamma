@@ -48,6 +48,7 @@ runs:
         echo "PUSHING CHANGES TO ${{ env.TARGET_BRANCH }}"
         git push origin ${{ env.TARGET_BRANCH }}
       shell: bash
+      if: ${{ github.event_name == 'pull_request' && ( github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' ) }}
       env:
         TARGET_BRANCH: ${{ inputs.target-branch }}
         GITHUB_PAT: ${{ inputs.token }}
