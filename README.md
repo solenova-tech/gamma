@@ -58,8 +58,9 @@ This action requires a personal access token (PAT) with appropriate permissions 
 
 ## Inputs
 
-target-branch (optional): The branch in which you want to merge the pull request. Defaults to 'alpha'.
-token (required): GitHub Personal Access Token. Make sure to provide a valid token.
+`target-branch` (optional): The branch in which you want to merge the pull request. Defaults to 'alpha'.
+
+`token` (required): GitHub Personal Access Token. Make sure to provide a valid token.
 
 ## License
 
