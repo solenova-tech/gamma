@@ -30,9 +30,10 @@ runs:
         git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         echo "FETCHING LATEST CODE AT \`$BRANCH\`"
         git fetch origin $BRANCH
+        git pull origin $BRANCH
         echo "CHECKING OUT \`$BRANCH\`"
         git checkout $BRANCH
-        git pull
+        git fetch
         if ! git rev-parse --verify ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           echo "CREATING \`${{ env.TARGET_BRANCH }}\`"
           git branch ${{ env.TARGET_BRANCH }}
@@ -42,7 +43,7 @@ runs:
         echo "CHECKING OUT \`${{ env.TARGET_BRANCH }}\`"
         git checkout ${{ env.TARGET_BRANCH }}
         echo "PULLING CHANGES IF ANY"
-        git pull
+        git pull origin ${{ env.TARGET_BRANCH }}
         echo "MERGING PR IN \`${{ env.TARGET_BRANCH }}\`"
         git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
         echo "PUSHING CHANGES TO ${{ env.TARGET_BRANCH }}"
