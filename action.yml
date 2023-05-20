@@ -36,5 +36,5 @@ runs:
         git push origin ${{ env.TARGET_BRANCH }}
       shell: bash
       env:
-        TARGET_BRANCH: INPUTS_TARGET-BRANCH
-        GITHUB_PAT: INPUTS_TOKEN
+        TARGET_BRANCH: ${{ inputs.target-branch }} # INPUTS_TARGET-BRANCH
+        GITHUB_PAT: ${{ inputs.token }} # INPUTS_TOKEN
