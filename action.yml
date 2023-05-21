@@ -48,15 +48,15 @@ runs:
         # fi
 
         if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-          echo "REMOVING ACTIVE .git"
+          echo "REMOVING ACTIVE REPO"
           echo "SORRY, FOR DOING THIS THE HARD WAY"
           echo "IF YOU CAN SOLVE THIS FOR EVERYONE, PLEASE DO"
           rm -r ./* .[!.]*
-          echo "INITIALIZING GIT REPO"
-          git init
-          echo "SETTING DEFAULT BRANCH"
-          git branch -m $BRANCH
         fi
+        echo "INITIALIZING GIT REPO"
+        git init
+        echo "SETTING DEFAULT BRANCH"
+        git branch -m $BRANCH
         echo "SETTING UP GIT REMOTE ORIGIN"
         git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         git fetch
