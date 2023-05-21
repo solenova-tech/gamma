@@ -21,7 +21,6 @@ branding:
 runs:
   using: 'composite'
   steps:
-
     - run: |
         git config --global advice.all false
       if: ${{ inputs.debug == 'false' }}
@@ -42,15 +41,15 @@ runs:
           git branch -m $BRANCH
           echo "SETTING UP GIT REMOTE"
           git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
-          # echo "CHECKING OUT \`$BRANCH\`"
-          # git checkout $BRANCH
-          # echo "FETCHING LATEST CODE AT \`$BRANCH\`"
-          # git pull origin $BRANCH
         else
           git remote set-url origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         fi
         git fetch
         if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
+          echo "CHECKING OUT \`$BRANCH\`"
+          git checkout $BRANCH
+          echo "FETCHING LATEST CODE AT \`$BRANCH\`"
+          git pull origin $BRANCH
           echo "CREATING \`${{ env.TARGET_BRANCH }}\`"
           git branch ${{ env.TARGET_BRANCH }}
           echo "PUSHING \`${{ env.TARGET_BRANCH }}\`"
