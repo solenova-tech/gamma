@@ -85,7 +85,7 @@ runs:
         API_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
 
         echo "POSTING COMMENT ON PR"
-        curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_PAT }}" -d "{\"body\":\"$COMMENT\"}" $API_URL
+        curl -X POST -H "Authorization: Bearer ${{ env.GITHUB_PAT }}" -d "{\"body\":\"$COMMENT\"}" $API_URL
       shell: bash
       if: ${{ steps.merge-branch.outcome == 'success' }}
       env:
