@@ -52,7 +52,7 @@ runs:
           echo "REMOVING ACTIVE .git"
           echo "SORRY, FOR DOING THIS THE HARD WAY"
           echo "IF YOU CAN SOLVE THIS FOR EVERYONE, PLEASE DO"
-          rm -rf .git
+          rm -r ./*
           echo "INITIALIZING GIT REPO"
           git init
           echo "SETTING DEFAULT BRANCH"
