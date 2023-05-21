@@ -64,11 +64,6 @@ runs:
           echo "CHECKING OUT \`${{ env.TARGET_BRANCH }}\`"
           git checkout -b ${{ env.TARGET_BRANCH }} origin/${{ env.TARGET_BRANCH }}
         fi
-        echo "CHECK AVAILABLE REMOTE(s)"
-        git remote -v
-        # Print remote origin URL
-        echo "REMOTE ORIGIN:"
-        git remote show origin | grep "Fetch URL:"
         echo "PULLING CHANGES IF ANY"
         git pull origin ${{ env.TARGET_BRANCH }}
         echo "MERGING PR IN \`${{ env.TARGET_BRANCH }}\`"
