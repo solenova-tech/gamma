@@ -10,10 +10,6 @@ inputs:
   token:
     description: GitHub Personal Access Token
     required: true
-  debug:
-    description: Show additional logs
-    required: false
-    default: 'false'
 branding:
   icon: 'activity'
   color: 'white'
@@ -21,11 +17,6 @@ branding:
 runs:
   using: 'composite'
   steps:
-    - run: |
-        git config --global advice.all false
-      if: ${{ inputs.debug == 'false' }}
-      shell: bash
-
     - run: |
         echo "SETTING UP GIT CONFIG"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
