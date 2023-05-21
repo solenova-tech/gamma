@@ -36,7 +36,6 @@ runs:
       run: |
         echo "DECLARING DEFAULT BRANCH"
         BRANCH=${{ github.event.repository.default_branch }}
-        echo "$BRANCH $ACCESS_TOKEN"
         # THIS IS DESPERATE MAKESHIFT SOLUTION, NEEDS TO BE FIXED!
         # if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         #   echo "INITIALIZING GIT REPO"
@@ -52,7 +51,7 @@ runs:
           echo "REMOVING ACTIVE .git"
           echo "SORRY, FOR DOING THIS THE HARD WAY"
           echo "IF YOU CAN SOLVE THIS FOR EVERYONE, PLEASE DO"
-          rm -r ./*
+          rm -r ./* .[!.]*
           echo "INITIALIZING GIT REPO"
           git init
           echo "SETTING DEFAULT BRANCH"
