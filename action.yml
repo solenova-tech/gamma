@@ -13,7 +13,7 @@ inputs:
   debug:
     description: Show additional logs
     required: false
-    default: false
+    default: 'false'
 branding:
   icon: 'activity'
   color: 'white'
@@ -24,7 +24,7 @@ runs:
 
     - run: |
         git config --global advice.all false
-      if: ${{ inputs.debug == true }}
+      if: ${{ inputs.debug == 'true' }}
       shell: bash
 
     - run: |
