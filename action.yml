@@ -24,7 +24,7 @@ runs:
 
     - run: |
         git config --global advice.all false
-      if: ${{ inputs.debug == 'true' }}
+      if: ${{ inputs.debug == 'false' }}
       shell: bash
 
     - run: |
