@@ -42,13 +42,13 @@ runs:
           git branch -m $BRANCH
           echo "SETTING UP GIT REMOTE"
           git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
+          echo "CHECKING OUT \`$BRANCH\`"
+          git checkout $BRANCH
+          echo "FETCHING LATEST CODE AT \`$BRANCH\`"
+          git pull origin $BRANCH
         else
           git remote set-url origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         fi
-        echo "FETCHING LATEST CODE AT \`$BRANCH\`"
-        git pull origin $BRANCH
-        echo "CHECKING OUT \`$BRANCH\`"
-        git checkout $BRANCH
         git fetch
         if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           echo "CREATING \`${{ env.TARGET_BRANCH }}\`"
