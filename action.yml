@@ -42,13 +42,12 @@ runs:
           git init
           echo "SETTING DEFAULT BRANCH"
           git branch -m $BRANCH
-          echo "SETTING UP GIT REMOTE"
-          git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         else
-          echo "REPO URL: https://${{ github.repository_owner }}:<PAT GOES HERE>@github.com/${{ github.repository }}.git"
-          echo "SETTING ORIGIN FOR PRE EXISTING REPO"
-          git remote set-url origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
+          echo "REMOVING REMOTE ORIGIN FOR PRE EXISTING REPO"
+          git remote remove origin
         fi
+        echo "SETTING UP GIT REMOTE ORIGIN"
+        git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         git fetch
         if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           echo "CHECKING OUT \`$BRANCH\`"
