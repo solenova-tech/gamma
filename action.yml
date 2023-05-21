@@ -18,6 +18,11 @@ runs:
   using: 'composite'
   steps:
     - run: |
+      run: |
+        echo "THIS ACTION SUPPORTS PULL REQUESTS ONLY, for now..."
+      shell: bash
+      if: ${{ github.event_name != 'pull_request' }}
+
         echo "SETTING UP GIT CONFIG"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
         git config --global user.name "${{ github.actor }}"
@@ -67,8 +72,3 @@ runs:
       env:
         TARGET_BRANCH: ${{ inputs.target-branch }}
         GITHUB_PAT: ${{ inputs.token }}
-
-    - run: |
-        echo "THIS ACTION SUPPORTS PULL REQUESTS ONLY, for now..."
-      shell: bash
-      if: ${{ github.event_name != 'pull_request' }}
