@@ -36,29 +36,17 @@ runs:
       run: |
         echo "DECLARING DEFAULT BRANCH"
         BRANCH=${{ github.event.repository.default_branch }}
-        # THIS IS DESPERATE MAKESHIFT SOLUTION, NEEDS TO BE FIXED!
-        # if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        #   echo "INITIALIZING GIT REPO"
-        #   git init
-        #   echo "SETTING DEFAULT BRANCH"
-        #   git branch -m $BRANCH
-        # else
-        #   echo "REMOVING REMOTE ORIGIN FOR PRE EXISTING REPO"
-        #   git remote remove origin
-        # fi
-
-        if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-          echo "REMOVING ACTIVE REPO"
-          echo "SORRY, FOR DOING THIS THE HARD WAY"
-          echo "IF YOU CAN SOLVE THIS FOR EVERYONE, PLEASE DO"
-          rm -r ./* .[!.]*
+        if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+          echo "INITIALIZING GIT REPO"
+          git init
+          echo "SETTING DEFAULT BRANCH"
+          git branch -m $BRANCH
+          echo "SETTING UP GIT REMOTE ORIGIN"
+          git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
+        else
+          echo "UPDATING REMOTE ORIGIN FOR PRE EXISTING REPO"
+          git remote set-url origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         fi
-        echo "INITIALIZING GIT REPO"
-        git init
-        echo "SETTING DEFAULT BRANCH"
-        git branch -m $BRANCH
-        echo "SETTING UP GIT REMOTE ORIGIN"
-        git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
         git fetch
         if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           echo "CHECKING OUT \`$BRANCH\`"
