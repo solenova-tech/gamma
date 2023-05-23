@@ -29,7 +29,6 @@ jobs:
       with:
         target-branch: 'staging' # replace this name with your testing branch
         token: ${{ secrets.GITHUB_TOKEN }} # Read below on how to get this
-
 ```
 
 This action requires a personal access token (PAT) with appropriate permissions to perform the merge operation. Make sure you provide the token input with a valid GitHub Personal Access Token. Create a PAT with the REPO permission using the following steps:
@@ -56,6 +55,16 @@ This action requires a personal access token (PAT) with appropriate permissions 
 - Click on the "Add secret" button to save the secret.
 **Note that, PAT grants significant access to your GitHub account, so treat them like passwords and keep them secure.**
 
+### Using actions/checkout
+
+If your pre-existing yml file (that your including this action to) is already using checkout, please use it with `persist-credentials` and set the value to `false`
+
+```YML
+- name: checkout code
+   uses: actions/checkout@v3
+   with:
+       persist-credentials: false
+```
 ## Inputs
 
 `target-branch` (optional): The branch in which you want to merge the pull request. Defaults to 'alpha'.
