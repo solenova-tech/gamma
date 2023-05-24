@@ -46,6 +46,9 @@ runs:
         fi
         echo "PULLING CHANGES IF ANY"
         git pull origin ${{ env.TARGET_BRANCH }}
+        echo "SETTING GITHUB-ACTION BOT CONFIG"
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
         echo "MERGING PR IN \`${{ env.TARGET_BRANCH }}\`"
         git merge --no-ff origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request into ${{ env.TARGET_BRANCH }}"
         echo "PUSHING CHANGES TO ${{ env.TARGET_BRANCH }}"
