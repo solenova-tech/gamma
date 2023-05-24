@@ -10,7 +10,8 @@ This action is triggered only when a pull request is opened, reopened, or synchr
 name: Merge PR to Testing Branch
 
 permissions:
-  contents: write
+  contents: write # for pushing the code back to your testing branch
+  pull-requests: write # Add this optional for allowing the action to make a comment of acknowledgment on the PR
 
 on:
   pull_request:
