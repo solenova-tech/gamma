@@ -22,12 +22,12 @@ runs:
 
     - id: merge-branch
       run: |
-        echo "DECLARING DEFAULT BRANCH"
-        BRANCH=${{ github.event.repository.default_branch }}
         if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-          echo "GIT REPO NOT FOUND, PLEASE USE /`actions/checkout@latest/`"
+          echo "GIT REPO NOT FOUND, PLEASE USE \`actions/checkout@latest\`"
           exit 1
         fi
+        echo "DECLARING DEFAULT BRANCH"
+        BRANCH=${{ github.event.repository.default_branch }}
         git fetch
         if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
           echo "CHECKING OUT \`$BRANCH\`"
