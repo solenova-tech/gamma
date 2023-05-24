@@ -63,7 +63,7 @@ runs:
         echo "EXTRACTING PR NUMBER"
         PR_NUMBER=$(echo "${{ github.event.pull_request.url }}" | awk -F'/' '{print $NF}')
         echo "CREATING COMMENT BODY AND API URL"
-        COMMENT="PR #$PR_NUMBER merged successfully in [${{ env.TARGET_BRANCH }}](https://github.com/${{ github.repository }}/tree/${{ env.TARGET_BRANCH }})"
+        COMMENT="PR #$PR_NUMBER has been merged successfully in [${{ env.TARGET_BRANCH }}](https://github.com/${{ github.repository }}/tree/${{ env.TARGET_BRANCH }}) by [Gamma](https://gamma.solenova.tech). Thanks to @${{ github.actor }} who contributed the last commit.\n\nLet's celebrate this milestone and get ready for the next one!"
         API_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
 
         echo "POSTING COMMENT ON PR"
