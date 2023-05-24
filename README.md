@@ -28,16 +28,13 @@ jobs:
 
     steps:
     - name: Checks out code
-      uses: actions/checkout@v3 
+      uses: actions/checkout@v3
 
     - name: Merge PR to Testing Branch
       uses: solenova-tech/gamma@v1.0.0 # replace version with latest from https://github.com/marketplace/actions/gamma-ci-made-easy
       with:
         target-branch: 'staging' # replace this name with your testing branch
 ```
-
-
-
 
 ## Inputs
 
