@@ -7,9 +7,6 @@ inputs:
     description: 'Branch in which you want to merge the PR, defaults to alpha'
     required: false
     default: 'alpha'
-  token:
-    description: GitHub Personal Access Token
-    required: true
 branding:
   icon: 'activity'
   color: 'white'
@@ -23,30 +20,13 @@ runs:
       shell: bash
       if: ${{ github.event_name != 'pull_request' }}
 
-    - id: config-setup
-      run: |
-        echo "SETTING UP GIT CONFIG"
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git config --global user.name "${{ github.actor }}"
-      shell: bash
-      env:
-        GITHUB_PAT: ${{ inputs.token }}
-
     - id: merge-branch
       run: |
         echo "DECLARING DEFAULT BRANCH"
         BRANCH=${{ github.event.repository.default_branch }}
         if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-          echo "INITIALIZING GIT REPO"
-          git init
-          echo "SETTING DEFAULT BRANCH"
-          git branch -m $BRANCH
-          echo "SETTING UP GIT REMOTE ORIGIN"
-          git remote add origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
-        else
-          echo "UPDATING REMOTE ORIGIN FOR PRE EXISTING REPO"
-          git config --unset http.https://github.com/.extraheader
-          git remote set-url origin https://${{ github.repository_owner }}:${{ env.GITHUB_PAT }}@github.com/${{ github.repository }}.git
+          echo "GIT REPO NOT FOUND, PLEASE USE /`actions/checkout@latest/`"
+          exit 1
         fi
         git fetch
         if ! git ls-remote --exit-code --heads origin ${{ env.TARGET_BRANCH }} >/dev/null 2>&1; then
@@ -74,7 +54,6 @@ runs:
       if: ${{ github.event_name == 'pull_request' && ( github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' ) }}
       env:
         TARGET_BRANCH: ${{ inputs.target-branch }}
-        GITHUB_PAT: ${{ inputs.token }}
 
     - id: leave-comment
       run: |
@@ -85,9 +64,8 @@ runs:
         API_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
 
         echo "POSTING COMMENT ON PR"
-        curl -X POST -H "Authorization: Bearer ${{ env.GITHUB_PAT }}" -d "{\"body\":\"$COMMENT\"}" $API_URL
+        curl -X POST -H "Authorization: Bearer ${{ github.token }}" -d "{\"body\":\"$COMMENT\"}" $API_URL
       shell: bash
       if: ${{ steps.merge-branch.outcome == 'success' }}
       env:
         TARGET_BRANCH: ${{ inputs.target-branch }}
-        GITHUB_PAT: ${{ inputs.token }}
