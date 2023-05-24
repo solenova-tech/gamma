@@ -9,6 +9,9 @@ This action is triggered only when a pull request is opened, reopened, or synchr
 ```YML
 name: Merge PR to Testing Branch
 
+permissions:
+  contents: write
+
 on:
   pull_request:
     branches:
@@ -24,6 +27,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checks out code
+      uses: actions/checkout@v3 
+
     - name: Merge PR to Testing Branch
       uses: solenova-tech/gamma@v1.0.0 # replace version with latest from https://github.com/marketplace/actions/gamma-ci-made-easy
       with:
