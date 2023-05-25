@@ -2,6 +2,10 @@
 
 This GitHub Action allows you to merge your pull requests directly into the testing branch with ease. It simplifies the process of merging pull requests by automating the necessary Git commands.
 
+## Installation
+
+Install it from [GitHub Marketplace](https://github.com/marketplace/actions/gamma-ci-made-easy)
+
 ## Usage
 
 This action is triggered only when a pull request is opened, reopened, or synchronized, in other cases the action will not produce expected result. To use this action in your workflow, you can include the following snippet in your workflow file (e.g., `.github/workflows/main.yml`):
