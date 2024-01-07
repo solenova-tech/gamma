@@ -1,3 +1,5 @@
+[![ReadMeSupportPalestine](https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg)](https://techforpalestine.org/learn-more)
+
 # Gamma CI Made Easy
 
 This GitHub Action allows you to merge your pull requests directly into the testing branch with ease. It simplifies the process of merging pull requests by automating the necessary Git commands.
